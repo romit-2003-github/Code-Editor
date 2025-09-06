@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 import { Modal } from 'antd';
 import Loading from '../components/Loading';
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-// AIzaSyDXWve4-LtntO7Og_b4EXEetIjbhz-EWuY
+
 const EditorPage = () => {
   const location = useLocation();
   const reactNavigator = useNavigate();
@@ -21,13 +21,13 @@ const EditorPage = () => {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState([]);
   const [loading, setLoading] = useState(false);
-  
+
   const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
   const genAI = new GoogleGenerativeAI(API_KEY);
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"})
-  
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
+
   const generateAnswer = async () => {
-    try{
+    try {
       setLoading(true);
       const result = await model.generateContent(question);
       const response = await result.response;
@@ -36,8 +36,7 @@ const EditorPage = () => {
       setAnswer(formattedText);
       setLoading(false);
     }
-    catch(err)
-    {
+    catch (err) {
       console.log(err);
     }
   }
@@ -157,7 +156,7 @@ const EditorPage = () => {
           <div className='flex flex-col items-center justify-center w-full h-full p-4'>
             <input type='text' placeholder='Ask any Coding Question here' className='w-full h-10 p-2 border-2 border-black rounded-md mb-4' value={question} onChange={(e) => setQuestion(e.target.value)} />
             <button className='bg-blue-800 text-white w-full h-10 rounded-md' onClick={generateAnswer} disabled={loading}>Generate Answer</button>
-            {loading && <Loading/>}
+            {loading && <Loading />}
           </div>
           {(answer.length > 0) && <p className='bg-[#1c1e29] p-4 text-white'>{answer}</p>}
 

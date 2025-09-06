@@ -1,5 +1,6 @@
 const express = require("express");
 require('dotenv').config();
+const cors = require("cors");
 const { Server } = require("socket.io");
 const http = require("http");
 const ACTIONS = require("./utilities/Actions");
@@ -7,7 +8,17 @@ const app = express();
 
 
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+    cors: {
+        origin: "https://romitcodes.vercel.app",
+        methods: ["GET", "POST"]
+    }
+});
+
+app.use(cors({
+    origin: "https://romitcodes.vercel.app",
+    methods: ["GET", "POST"]
+}));
 
 const userSocketMap = {};
 
